@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 
 class ExpenseCategoryController extends Controller
 {
+    public function index()
+    {
+        $expense_cat = ExpenseCategory::all();
+        return view('pages.dashboard.expense-category', compact('expense_cat'));
+    }
+  
+  
+  
     public function expenseCategoryList()
     {
         $user_id = auth()->user()->id;

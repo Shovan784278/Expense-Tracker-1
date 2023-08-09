@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
 {
+    public function index()
+    {
+        $expense_cat = Expense::all();
+        return view('pages.dashboard.expense-page', compact('expense_cat'));
+    }
+
     public function ExpenseList()
     {
         $user_id = auth()->user()->id;
@@ -36,9 +42,18 @@ class ExpenseController extends Controller
         ]);
     }
 
+    public function ExpenseById(Request $request)
+    {
+        $expense_id = $request->input('id');
+
+        $user_id = $request->header('id');
+
+        return Expense::where('id', $expense_id)->first();
+    }
+
     public function updateExpense(Request $request)
     {
-    
+
         $Expense_id = $request->id;
 
         $Expense = Expense::find($Expense_id);

@@ -12,7 +12,6 @@ class IncomeController extends Controller
     public function index()
     {
         $income_cat = IncomeCategory::all();
-
         return view('pages.dashboard.category-page', compact('income_cat'));
     }
 
@@ -41,7 +40,7 @@ class IncomeController extends Controller
             'desc' => $desc,
             'date' => $date,
             'user_id' => $user_id,
-            'income_category_id' => $income_cat_id,
+            'income_category_id' => $income_cat_id, 
         ]);
     }
 
@@ -54,7 +53,7 @@ class IncomeController extends Controller
         return Income::where('id', $income_id)->first();
     }
 
-    
+
     public function updateIncome(Request $request)
     {
 
@@ -70,7 +69,7 @@ class IncomeController extends Controller
         return $income->update($request->only(['name', 'amount', 'desc', 'date']));
     }
 
-    
+
 
     public function deleteIncome(Request $request)
     {

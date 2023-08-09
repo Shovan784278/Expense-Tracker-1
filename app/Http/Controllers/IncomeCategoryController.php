@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ExpenseCategory;
 use App\Models\Income;
 use App\Models\IncomeCategory;
 use Illuminate\Http\Request;
 
 class IncomeCategoryController extends Controller
 {
-    // public function incomeCategory()
-    // {
-    //     return view('IncomeCategory.index');
-    // }
-
+    public function index()
+    {
+        $income_cat = IncomeCategory::all();
+        return view('pages.dashboard.expense-category', compact('income_cat'));
+    }
     // C R U D
 
     public function incomeCategoryList()

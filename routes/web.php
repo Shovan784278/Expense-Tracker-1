@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
         ->name(('income-cat-delete'));
 
     // Expense Category
+
     Route::get('/expense-cat-list', [ExpenseCategoryController::class, 'expenseCategoryList'])
         ->name('income-cat-list');
 
@@ -77,15 +78,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/delete-income', [IncomeController::class, 'deleteIncome'])
         ->name('deleteIncome');
 
-
-
     // Expense Page
     Route::get('/expense-list', [ExpenseController::class, 'ExpenseList'])
         ->name('expense-list');
 
     Route::post('/create-expense', [ExpenseController::class, 'createExpense'])
         ->name(('expense-create'));
-
+    Route::post("/update-expense-by-id", [ExpenseController::class, 'ExpenseById']);
     Route::post('/update-expense', [ExpenseController::class, 'updateExpense'])
         ->name(('expense-update'));
 
@@ -98,7 +97,11 @@ Route::middleware('auth')->group(function () {
 
     // Route::get('/categoryPage', [CategoryController::class, 'CategoryPage']);
 
-    Route::get('/income', [IncomeController::class,'index']);
+    Route::get('/income', [IncomeController::class, 'index']);
+    Route::get('/expense', [ExpenseController::class, 'index']);
+
+    Route::get('/income/category', [IncomeCategoryController::class, 'index']);
+    Route::get('/expense/category', [ExpenseCategoryController::class, 'index']);
 
 });
 
