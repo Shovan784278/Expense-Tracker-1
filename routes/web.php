@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseCategoryController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IncomeCategoryController;
@@ -22,9 +23,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -67,11 +68,16 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/create-income', [IncomeController::class, 'createIncome'])
         ->name(('income-create'));
+
+    Route::post("/update-income-by-id", [IncomeController::class, 'IncomeById']);
+
     Route::post('/update-income', [IncomeController::class, 'updateIncome'])
         ->name(('income-update'));
 
     Route::post('/delete-income', [IncomeController::class, 'deleteIncome'])
         ->name('deleteIncome');
+
+
 
     // Expense Page
     Route::get('/expense-list', [ExpenseController::class, 'ExpenseList'])
@@ -85,7 +91,18 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/delete-expense', [ExpenseController::class, 'deleteExpense'])
         ->name('deleteExpense');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'DashboardPage']);
+
+    // Route::get('/categoryPage', [CategoryController::class, 'CategoryPage']);
+
+    Route::get('/income', [IncomeController::class,'index']);
 
 });
+
+// Route::get('/dashboard', [DashboardController::class, 'DashboardPage'])
+//     ->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__ . '/auth.php';

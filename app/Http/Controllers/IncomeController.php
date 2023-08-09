@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Income;
+use App\Models\IncomeCategory;
 use Illuminate\Http\Request;
 
 class IncomeController extends Controller
 {
-    public function ExpenseList()
+
+    public function index()
+    {
+        $income_cat = IncomeCategory::all();
+
+        return view('pages.dashboard.category-page', compact('income_cat'));
+    }
+
+    public function IncomeList()
     {
         $user_id = auth()->user()->id;
 
@@ -36,9 +45,19 @@ class IncomeController extends Controller
         ]);
     }
 
+    public function IncomeById(Request $request)
+    {
+        $income_id = $request->input('id');
+
+        $user_id = $request->header('id');
+
+        return Income::where('id', $income_id)->first();
+    }
+
+    
     public function updateIncome(Request $request)
     {
-    
+
         $income_id = $request->id;
 
         $income = Income::find($income_id);
@@ -50,6 +69,8 @@ class IncomeController extends Controller
         // Update only the fields that are provided in the request
         return $income->update($request->only(['name', 'amount', 'desc', 'date']));
     }
+
+    
 
     public function deleteIncome(Request $request)
     {
